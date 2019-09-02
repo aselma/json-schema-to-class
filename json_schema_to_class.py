@@ -112,7 +112,7 @@ class Array(Basic):
                 default=repr(self.default or [])
             )
         else:
-            return '{spaces}self.{name}: self.{class_name}.{item_type} = list(map(self.{class_name}.{item_type}, values.get("{name}", {default})))'.format(
+            return '{spaces}self.{name}: List[self.{class_name}.{item_type}] = list(map(self.{class_name}.{item_type}, values.get("{name}", {default})))'.format(
                 spaces=spaces(2),
                 name=self.name,
                 class_name=self.class_name(),
