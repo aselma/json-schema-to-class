@@ -112,10 +112,10 @@ class Array(Basic):
                 default=repr(self.default or [])
             )
         else:
-            return '{spaces}self.{name}: {type_name} = list(map({item_type}, values.get("{name}", {default})))'.format(
+            return '{spaces}self.{name}: self.{class_name}.{item_type} = list(map(self.{class_name}.{item_type}, values.get("{name}", {default})))'.format(
                 spaces=spaces(2),
                 name=self.name,
-                type_name=self.type_name(),
+                class_name=self.class_name(),
                 item_type=self.items.type_name(),
                 default=repr(self.default or [])
             )
@@ -143,7 +143,7 @@ class Model(Item):
         self._in_definitions = True
 
     def inner_models(self) -> List['Model']:
-        return [item for item in self.properties if isinstance(item, Model)]
+        return [item for item in self.properties if isinstance(item, Model) or isinstance(item, Array)]
 
     def to_json(self):
         return {
